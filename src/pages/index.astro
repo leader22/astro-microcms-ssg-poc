@@ -1,0 +1,30 @@
+---
+import { setupIndexPage } from "../data.js";
+import BaseLayout from "../layouts/base.astro";
+
+const { articles } = await setupIndexPage(Astro);
+---
+
+<BaseLayout>
+  <h1>Welcome!</h1>
+  <p>こんにちは</p>
+  <h2>最新の記事</h2>
+  <ul>
+    {articles.map((article) => (
+      <li>
+        <h3>
+          <a href={`/articles/${article.id}`}>
+            {article.title}
+          </a>
+        </h3>
+        category: <a href={`/categories/${article.category.slug}`}>{article.category.title}</a>
+        /
+        書いた人: {article.author.name}
+        /
+        <date>{article.publishedAt}</date>
+      </li>
+    ))}
+  </ul>
+  <hr />
+  <a href="/admin/preview">PREVIEW</a>
+</BaseLayout>

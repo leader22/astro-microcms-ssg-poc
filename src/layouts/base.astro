@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SSG PoC</title>
+  </head>
+  <body>
+    <div class="main">
+      <header>
+        <a href="/">
+          へっだー
+        </a>
+      </header>
+
+      <div>
+        <slot />
+      </div>
+
+      <footer>
+        ふったー
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  html {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    height: 100%;
+    background-color: #eee;
+  }
+
+  header {
+    background-color: #04b0fb;
+    color: #fff;
+    text-align: center;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  footer {
+    flex: 0 0 auto;
+    margin-top: auto;
+    background-color: #aaa;
+    color: #fff;
+    text-align: center;
+  }
+</style>

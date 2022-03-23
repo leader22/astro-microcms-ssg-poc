@@ -1,0 +1,13 @@
+---
+export { getStaticPathsForArticlePages as getStaticPaths } from "../../data.js";
+
+import { setupArticlePage } from "../../data.js";
+import BaseLayout from "../../layouts/base.astro";
+import Article from "../../components/article.svelte";
+
+const { article } = await setupArticlePage(Astro);
+---
+
+<BaseLayout>
+  <Article {article} />
+</BaseLayout>
