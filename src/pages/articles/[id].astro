@@ -3,11 +3,17 @@ export { getStaticPathsForArticlePages as getStaticPaths } from "../../data.js";
 
 import { setupArticlePage } from "../../data.js";
 import BaseLayout from "../../layouts/base.astro";
+import ArticleLayout from "../../components/article-layout.svelte";
 import Article from "../../components/article.svelte";
+import DynamicContent from "../../components/dynamic-content.svelte";
 
 const { article } = await setupArticlePage(Astro);
 ---
 
 <BaseLayout>
-  <Article {article} />
+  <ArticleLayout>
+    <Article {article} />
+    <div style="height: 100vh" />
+    <DynamicContent client:visible />
+  </ArticleLayout>
 </BaseLayout>
