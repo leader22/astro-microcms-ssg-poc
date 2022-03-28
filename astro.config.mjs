@@ -1,10 +1,11 @@
 import { defineConfig } from "astro/config";
+import svelte from "@astrojs/svelte";
 
-// See https://astro.build/config
+// https://astro.build/config
 export default defineConfig({
-  renderers: ["@astrojs/renderer-svelte"],
+  integrations: [svelte()],
   buildOptions: {
     site: "https://astro-microcms-ssg-poc.example.com",
-    sitemapFilter: (url) => url.includes("/admin/") ? false : true,
+    sitemapFilter: url => url.includes("/admin/") ? false : true
   },
 });
