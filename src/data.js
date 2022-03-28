@@ -5,8 +5,21 @@ const client = createClient({
   apiKey: import.meta.env.MICROCMS_API_KEY,
 });
 
+// Ensure only 1 shot to fetch
+let cachePromise = null;
 const fetchAllArticles = async () => {
-  // Should cache? but it may break something if this called in async
+  if (cachePromise === null) {
+    console.log("🌀 fetchAllArticles() w/o cachePromise");
+    return (cachePromise = fetchAllData());
+  }
+
+  console.log("✨ fetchAllArticles() w/  cachePromise");
+  return cachePromise;
+};
+
+const fetchAllData = async () => {
+  console.time("fetchAllData()");
+
   const allArticles = [];
 
   let offset = 0;
@@ -22,6 +35,8 @@ const fetchAllArticles = async () => {
     if (offset > res.totalCount) break;
   }
 
+  console.timeEnd("fetchAllData()");
+
   return allArticles;
 };
 
@@ -31,12 +46,9 @@ const fetchAllArticles = async () => {
 
 // /
 export const setupIndexPage = async () => {
-  const { contents } = await client.get({
-    endpoint: "articles",
-    queries: { limit: 4, orders: "-publishedAt" }
-  });
+  const allArticles = await fetchAllArticles();
 
-  return { articles: contents };
+  return { articles: allArticles.slice(0, 3) };
 };
 
 // /articles/:id
@@ -53,6 +65,7 @@ export const setupCategoryPage = async ({ props }) => {
 // Define dynamic page paths
 //
 
+// /articles/:id
 export const getStaticPathsForArticlePages = async () => {
   const allArticles = await fetchAllArticles();
 
